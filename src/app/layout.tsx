@@ -7,6 +7,7 @@ import { ReactNode } from "react";
 import { Archivo } from "next/font/google";
 import { Libre_Franklin } from "next/font/google";
 import { Providers } from "./providers";
+import { Toaster as SonarToster } from "@/components/ui/sonner";
 import { Toaster } from "@/components/ui/toaster";
 import { Header } from "./_header/header";
 
@@ -46,6 +47,7 @@ export default async function RootLayout({
           <div className="container mx-auto w-full py-12">{children}</div>
         </Providers>
         <Toaster />
+        <SonarToster />
       </body>
     </html>
   );
