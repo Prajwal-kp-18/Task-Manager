@@ -1,3 +1,3 @@
-export const applicationName = "APP";
+export const applicationName = "Task Manager";
 
 export const afterLoginUrl = "/dashboard";

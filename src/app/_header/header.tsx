@@ -11,7 +11,13 @@ import {
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
-import { LayoutDashboard, Lightbulb, Loader2Icon, LogOut } from "lucide-react";
+import {
+  Layout,
+  LayoutDashboard,
+  Lightbulb,
+  Loader2Icon,
+  LogOut,
+} from "lucide-react";
 import { getUserProfileUseCase } from "@/use-cases/users";
 import { ModeToggle } from "./mode-toggle";
 import { MenuButton } from "./menu-button";
@@ -27,8 +33,8 @@ export async function Header() {
       <div className="container mx-auto flex items-center justify-between">
         <div className="flex items-center gap-8">
           <Link href="/" className="flex items-center gap-2 text-xl">
-            <Lightbulb />
-            <div className="hidden md:block">APP</div>
+            <Layout className="h-6 w-6" />
+            <div className="hidden md:block">Task Manager</div>
           </Link>
 
           <div className="flex items-center gap-2">
