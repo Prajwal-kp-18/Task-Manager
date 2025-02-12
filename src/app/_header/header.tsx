@@ -29,6 +29,7 @@ import {
   SheetTrigger,
   SheetClose,
 } from "@/components/ui/sheet";
+import Image from "next/image";
 
 const profilerLoader = cache(getUserProfileUseCase);
 
@@ -44,22 +45,47 @@ export async function Header() {
             <Layout className="h-6 w-6" />
             <div>Task Manager</div>
           </Link>
-          <nav className="space-y-2">
-            <Link
-              href="/dashboard"
-              className="flex items-center gap-2 rounded-lg px-3 py-2 transition-colors hover:bg-accent hover:text-accent-foreground"
-            >
-              <LayoutDashboard className="h-5 w-5" />
-              <span>Dashboard</span>
-            </Link>
-            <Link
-              href="/calendar"
-              className="flex items-center gap-2 rounded-lg px-3 py-2 transition-colors hover:bg-accent hover:text-accent-foreground"
-            >
-              <Calendar className="h-5 w-5" />
-              <span>Calendar</span>
-            </Link>
-          </nav>
+
+          {user ? (
+            <nav className="space-y-2">
+              <Link
+                href="/dashboard"
+                className="flex items-center gap-2 rounded-lg px-3 py-2 transition-colors hover:bg-accent hover:text-accent-foreground"
+              >
+                <LayoutDashboard className="h-5 w-5" />
+                <span>Dashboard</span>
+              </Link>
+              <Link
+                href="/tasks"
+                className="flex items-center gap-2 rounded-lg px-3 py-2 transition-colors hover:bg-accent hover:text-accent-foreground"
+              >
+                <Calendar className="h-5 w-5" />
+                <span>My Tasks</span>
+              </Link>
+              <Link
+                href="/projects"
+                className="flex items-center gap-2 rounded-lg px-3 py-2 transition-colors hover:bg-accent hover:text-accent-foreground"
+              >
+                <Calendar className="h-5 w-5" />
+                <span>Projects</span>
+              </Link>
+              <Link
+                href="/calendar"
+                className="flex items-center gap-2 rounded-lg px-3 py-2 transition-colors hover:bg-accent hover:text-accent-foreground"
+              >
+                <Calendar className="h-5 w-5" />
+                <span>Calendar</span>
+              </Link>
+            </nav>
+          ) : (
+            <Image
+              src="/images/tenor.gif"
+              alt="Loading"
+              width={200}
+              height={200}
+              className="mt-10"
+            />
+          )}
         </div>
       </aside>
 
@@ -84,26 +110,57 @@ export async function Header() {
                     <div>Task Manager</div>
                   </Link>
                 </div>
-                <nav className="flex-grow space-y-1 p-4">
-                  <SheetClose asChild>
-                    <Link
-                      href="/dashboard"
-                      className="flex items-center rounded-lg px-3 py-2 text-sm font-medium transition-colors hover:bg-accent hover:text-accent-foreground"
-                    >
-                      <LayoutDashboard className="mr-2 h-5 w-5" />
-                      Dashboard
-                    </Link>
-                  </SheetClose>
-                  <SheetClose asChild>
-                    <Link
-                      href="/calendar"
-                      className="flex items-center rounded-lg px-3 py-2 text-sm font-medium transition-colors hover:bg-accent hover:text-accent-foreground"
-                    >
-                      <Calendar className="mr-2 h-5 w-5" />
-                      Calendar
-                    </Link>
-                  </SheetClose>
-                </nav>
+
+                {user ? (
+                  <nav className="flex-grow space-y-1 p-4">
+                    <SheetClose asChild>
+                      <Link
+                        href="/dashboard"
+                        className="flex items-center rounded-lg px-3 py-2 text-sm font-medium transition-colors hover:bg-accent hover:text-accent-foreground"
+                      >
+                        <LayoutDashboard className="mr-2 h-5 w-5" />
+                        Dashboard
+                      </Link>
+                    </SheetClose>
+                    <SheetClose asChild>
+                      <Link
+                        href="/tasks"
+                        className="flex items-center rounded-lg px-3 py-2 text-sm font-medium transition-colors hover:bg-accent hover:text-accent-foreground"
+                      >
+                        <Calendar className="mr-2 h-5 w-5" />
+                        My Tasks
+                      </Link>
+                    </SheetClose>
+                    <SheetClose asChild>
+                      <Link
+                        href="/projects"
+                        className="flex items-center rounded-lg px-3 py-2 text-sm font-medium transition-colors hover:bg-accent hover:text-accent-foreground"
+                      >
+                        <Calendar className="mr-2 h-5 w-5" />
+                        Projects
+                      </Link>
+                    </SheetClose>
+                    <SheetClose asChild>
+                      <Link
+                        href="/calendar"
+                        className="flex items-center rounded-lg px-3 py-2 text-sm font-medium transition-colors hover:bg-accent hover:text-accent-foreground"
+                      >
+                        <Calendar className="mr-2 h-5 w-5" />
+                        Calendar
+                      </Link>
+                    </SheetClose>
+                  </nav>
+                ) : (
+                  <div className="mt-10 flex justify-center">
+                    <Image
+                      src="/images/tenor.gif"
+                      alt="Loading"
+                      width={150}
+                      height={150}
+                      className="mx-auto"
+                    />
+                  </div>
+                )}
               </SheetContent>
             </Sheet>
 

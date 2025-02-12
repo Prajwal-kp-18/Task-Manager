@@ -10,6 +10,7 @@ import {
   Clock,
 } from "lucide-react";
 import Link from "next/link";
+import Image from "next/image";
 
 export function LandingPage() {
   return (
@@ -17,7 +18,7 @@ export function LandingPage() {
       {/* Hero Section */}
       <section className="pb-20 pt-28">
         <div className="container mx-auto px-6">
-          <div className="mx-auto max-w-4xl text-center">
+          <div className="mx-auto flex max-w-4xl flex-col items-center justify-center text-center">
             <h1 className="mb-6 text-5xl font-bold text-black dark:text-white">
               Master Your Day with Intelligent Task Management
             </h1>
@@ -39,13 +40,20 @@ export function LandingPage() {
                 Watch Demo
               </button>
             </div>
-            <div className="mt-12">
-              <img
+            {/* <div className="mt-12"> */}
+            {/* <img
                 src="https://images.unsplash.com/photo-1551434678-e076c223a692?auto=format&fit=crop&q=80&w=2070"
                 alt="Task Manager Dashboard"
                 className="rounded-xl shadow-2xl"
               />
-            </div>
+            </div> */}
+            <Image
+              src="/images/image2.png"
+              alt="Task Manager"
+              width={500}
+              height={500}
+              className="mt-10 rounded-xl shadow-2xl"
+            />
           </div>
         </div>
       </section>
@@ -153,7 +161,15 @@ export function LandingPage() {
       </section>
 
       {/* CTA Section */}
-      <section className="mb-8 mt-8 rounded-[100px] bg-black py-20 md:ml-[200px] md:mr-[200px]">
+      <section className="mb-8 mt-8 flex flex-col-reverse rounded-[100px] bg-black py-20 md:ml-[200px] md:mr-[200px] md:flex-row">
+        <div>
+          <Image
+            src="/images/image1.png"
+            alt="Task Manager"
+            width={500}
+            height={500}
+          />
+        </div>
         <div className="container mx-auto px-6">
           <div className="mx-auto max-w-3xl text-center">
             <h2 className="mb-6 text-3xl font-bold text-blue-600">
