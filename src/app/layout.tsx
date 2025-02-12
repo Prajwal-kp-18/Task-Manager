@@ -43,11 +43,17 @@ export default async function RootLayout({
       >
         <Providers>
           <NextTopLoader />
-          <Header />
-          <div className="container mx-auto w-full py-12">{children}</div>
+          <div className="flex min-h-screen">
+            <Header />
+            <div className="flex flex-1 flex-col">
+              <div className="container mx-auto flex-1 px-4 py-6 md:px-6 md:py-8">
+                {children}
+              </div>
+            </div>
+          </div>
+          <Toaster />
+          <SonarToster />
         </Providers>
-        <Toaster />
-        <SonarToster />
       </body>
     </html>
   );

@@ -14,14 +14,21 @@ import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import {
   Layout,
   LayoutDashboard,
-  Lightbulb,
   Loader2Icon,
   LogOut,
+  Calendar,
+  Menu,
 } from "lucide-react";
 import { getUserProfileUseCase } from "@/use-cases/users";
 import { ModeToggle } from "./mode-toggle";
 import { MenuButton } from "./menu-button";
 import { UserId } from "@/types";
+import {
+  Sheet,
+  SheetContent,
+  SheetTrigger,
+  SheetClose,
+} from "@/components/ui/sheet";
 
 const profilerLoader = cache(getUserProfileUseCase);
 
@@ -29,42 +36,101 @@ export async function Header() {
   const user = await getCurrentUser();
 
   return (
-    <div className="border-b py-4">
-      <div className="container mx-auto flex items-center justify-between">
-        <div className="flex items-center gap-8">
-          <Link href="/" className="flex items-center gap-2 text-xl">
+    <>
+      {/* Permanent Sidebar for Desktop */}
+      <aside className="hidden w-64 flex-col border-r bg-background md:flex">
+        <div className="sticky top-0 z-30 flex h-screen flex-col p-4">
+          <Link href="/" className="mb-8 flex items-center gap-2 text-xl">
             <Layout className="h-6 w-6" />
-            <div className="hidden md:block">Task Manager</div>
+            <div>Task Manager</div>
           </Link>
+          <nav className="space-y-2">
+            <Link
+              href="/dashboard"
+              className="flex items-center gap-2 rounded-lg px-3 py-2 transition-colors hover:bg-accent hover:text-accent-foreground"
+            >
+              <LayoutDashboard className="h-5 w-5" />
+              <span>Dashboard</span>
+            </Link>
+            <Link
+              href="/calendar"
+              className="flex items-center gap-2 rounded-lg px-3 py-2 transition-colors hover:bg-accent hover:text-accent-foreground"
+            >
+              <Calendar className="h-5 w-5" />
+              <span>Calendar</span>
+            </Link>
+          </nav>
+        </div>
+      </aside>
 
-          <div className="flex items-center gap-2">
-            {user && (
-              <Button
-                variant={"link"}
-                asChild
-                className="flex items-center justify-center gap-2"
+      {/* Top Header Bar */}
+      <div className="fixed left-0 right-0 top-0 z-40 border-b bg-background md:left-64">
+        <div className="flex h-16 items-center px-4">
+          {/* Mobile Toggle and Logo */}
+          <div className="flex items-center gap-4 md:hidden">
+            <Sheet>
+              <SheetTrigger asChild>
+                <Button variant="outline" size="icon" className="shrink-0">
+                  <Menu className="h-4 w-4" />
+                </Button>
+              </SheetTrigger>
+              <SheetContent
+                side="left"
+                className="flex h-full w-64 max-w-xs flex-col overflow-y-auto p-0"
               >
-                <Link href={"/dashboard"}>
-                  <LayoutDashboard className="h-4 w-4" /> Dashboard
-                </Link>
-              </Button>
-            )}
+                <div className="border-b p-4">
+                  <Link href="/" className="flex items-center gap-2 text-xl">
+                    <Layout className="h-6 w-6" />
+                    <div>Task Manager</div>
+                  </Link>
+                </div>
+                <nav className="flex-grow space-y-1 p-4">
+                  <SheetClose asChild>
+                    <Link
+                      href="/dashboard"
+                      className="flex items-center rounded-lg px-3 py-2 text-sm font-medium transition-colors hover:bg-accent hover:text-accent-foreground"
+                    >
+                      <LayoutDashboard className="mr-2 h-5 w-5" />
+                      Dashboard
+                    </Link>
+                  </SheetClose>
+                  <SheetClose asChild>
+                    <Link
+                      href="/calendar"
+                      className="flex items-center rounded-lg px-3 py-2 text-sm font-medium transition-colors hover:bg-accent hover:text-accent-foreground"
+                    >
+                      <Calendar className="mr-2 h-5 w-5" />
+                      Calendar
+                    </Link>
+                  </SheetClose>
+                </nav>
+              </SheetContent>
+            </Sheet>
+
+            <Link
+              href="/"
+              className="flex items-center gap-2 text-lg md:hidden"
+            >
+              <Layout className="h-5 w-5" />
+              <span>Task Manager</span>
+            </Link>
+          </div>
+
+          {/* Right side items */}
+          <div className="ml-auto flex items-center gap-4">
+            <Suspense
+              fallback={
+                <div className="flex w-8 items-center justify-center">
+                  <Loader2Icon className="h-4 w-4 animate-spin" />
+                </div>
+              }
+            >
+              <HeaderActions />
+            </Suspense>
           </div>
         </div>
-
-        <div className="flex items-center justify-between gap-5">
-          <Suspense
-            fallback={
-              <div className="flex w-40 items-center justify-center">
-                <Loader2Icon className="h-4 w-4 animate-spin" />
-              </div>
-            }
-          >
-            <HeaderActions />
-          </Suspense>
-        </div>
       </div>
-    </div>
+    </>
   );
 }
 
@@ -89,18 +155,12 @@ async function HeaderActions() {
     <>
       {isSignedIn ? (
         <>
-          <div className="hidden md:block">
-            <ModeToggle />
-          </div>
+          <ModeToggle />
           <ProfileDropdown userId={user.id} />
-          <div className="md:hidden">
-            <MenuButton />
-          </div>
         </>
       ) : (
         <>
           <ModeToggle />
-
           <Button asChild variant="secondary">
             <Link href="/sign-in">Sign In</Link>
           </Button>
@@ -109,6 +169,7 @@ async function HeaderActions() {
     </>
   );
 }
+
 async function ProfileDropdown({ userId }: { userId: UserId }) {
   const profile = await profilerLoader(userId);
   return (
@@ -125,7 +186,7 @@ async function ProfileDropdown({ userId }: { userId: UserId }) {
         </Suspense>
       </DropdownMenuTrigger>
 
-      <DropdownMenuContent className="space-y-2">
+      <DropdownMenuContent align="end" className="w-56">
         <DropdownMenuLabel>{profile.displayName}</DropdownMenuLabel>
         <DropdownMenuSeparator />
         <DropdownMenuItem asChild className="cursor-pointer">

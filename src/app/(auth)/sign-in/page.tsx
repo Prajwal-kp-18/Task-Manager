@@ -44,7 +44,7 @@ export default function SignInPage() {
             Sign in with GitHub
           </Link>
 
-          <div className="relative py-4">
+          {/* <div className="relative py-4">
             <div className="absolute inset-0 flex items-center">
               <span className="w-full border-t" />
             </div>
@@ -53,9 +53,9 @@ export default function SignInPage() {
                 Or sign in with email
               </span>
             </div>
-          </div>
+          </div> */}
 
-          <MagicLinkForm />
+          {/* <MagicLinkForm /> */}
 
           <div className="relative py-4">
             <div className="absolute inset-0 flex items-center">
