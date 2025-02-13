@@ -42,6 +42,35 @@ export const getTaskData = async () => {
     .orderBy(asc(tasks.id));
   return data;
 };
+type Task = {
+  id: number;
+  userId: number;
+  title: string;
+  description?: string | null; // Allow `null`
+  dueDate?: number | null; // Store as timestamp (UNIX epoch in seconds)
+  completed: boolean;
+  createdAt: number; // Convert `Date` to timestamp
+  updatedAt: number;
+};
+export const getTaskDataCalendar = async (): Promise<Task[]> => {
+  const user = await getCurrentUser();
+  if (!user) {
+    throw new Error("User not authenticated");
+  }
+  const data = await db
+    .select()
+    .from(tasks)
+    .where(eq(tasks.userId, user.id))
+    .orderBy(asc(tasks.id));
+
+  // Normalize data
+  return data.map((task) => ({
+    ...task,
+    dueDate: task.dueDate ? new Date(task.dueDate).getTime() : null, // Convert Date to timestamp
+    createdAt: new Date(task.createdAt).getTime(),
+    updatedAt: new Date(task.updatedAt).getTime(),
+  }));
+};
 
 export const toggleTask = async (taskId: number) => {
   const user = await getCurrentUser();
