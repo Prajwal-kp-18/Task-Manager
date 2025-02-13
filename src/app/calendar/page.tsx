@@ -220,9 +220,9 @@ const TaskCalendar = () => {
                   <Card key={task.id} className="p-4">
                     <h4 className="mb-1 font-medium">{task.title}</h4>
                     {task.description && (
-                      <p className="text-sm">{task.description}</p>
+                      <p className="ml-2 text-sm">{task.description}</p>
                     )}
-                    <p className="text-xs">
+                    <p className="ml-2 text-xs">
                       Due:{" "}
                       {task.dueDate
                         ? formatDateToIndianStyle(task.dueDate)
@@ -251,7 +251,7 @@ const TaskCalendar = () => {
                   <div key={task.id} className="mb-2">
                     <h4 className="font-medium">{task.title}</h4>
                     {task.description && (
-                      <p className="text-sm">{task.description}</p>
+                      <p className="ml-4 text-sm">{task.description}</p>
                     )}
                   </div>
                 ))
