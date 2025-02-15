@@ -8,7 +8,7 @@ import { Mail } from "lucide-react";
 import Link from "next/link";
 import { MagicLinkForm } from "./magic-link-form";
 
-export default function SignInPage() {
+export default async function SignInPage() {
   return (
     <div className="mx-auto flex min-h-[80dvh] items-center justify-center py-24">
       <div className="mx-auto max-w-md space-y-6">
