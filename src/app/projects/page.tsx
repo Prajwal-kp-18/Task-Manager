@@ -71,8 +71,14 @@ export default function DashboardPage() {
                 className={`flex items-center justify-between rounded-lg border p-4 shadow-sm ${task.completed ? "bg-green-800" : "bg-red-800"} border-gray-700`}
               >
                 <div>
-                  <h3 className="font-medium">{task.title}</h3>
-                  <p>{task.description}</p>
+                  <h3 className="font-medium">
+                    <span className="text-xl">Title: </span>
+                    {task.title}
+                  </h3>
+                  <p>
+                    <span className="text-lg">Descriptioon: </span>
+                    {task.description}
+                  </p>
                 </div>
                 <span
                   className={`inline-flex h-8 w-8 items-center justify-center rounded-full ${task.completed ? "bg-green-500" : "bg-red-500"} text-white`}
