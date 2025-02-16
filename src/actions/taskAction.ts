@@ -4,13 +4,13 @@ import { tasks } from "@/db/schema";
 import { getCurrentUser } from "@/lib/session";
 import { and, asc, eq, inArray, not } from "drizzle-orm";
 import { revalidatePath } from "next/cache";
-
 // Ensure required fields are provided when adding a task
 interface NewTask {
   title: string;
   description?: string;
   dueDate?: Date | null;
   completed?: boolean;
+  project?: string;
 }
 
 // Function to add a task for the authenticated user
@@ -51,6 +51,8 @@ type Task = {
   completed: boolean;
   createdAt: number; // Convert `Date` to timestamp
   updatedAt: number;
+  project: string; // Define the project field type
+  // Add other fields if necessary
 };
 export const getTaskDataCalendar = async (): Promise<Task[]> => {
   const user = await getCurrentUser();
@@ -69,6 +71,7 @@ export const getTaskDataCalendar = async (): Promise<Task[]> => {
     dueDate: task.dueDate ? new Date(task.dueDate).getTime() : null, // Convert Date to timestamp
     createdAt: new Date(task.createdAt).getTime(),
     updatedAt: new Date(task.updatedAt).getTime(),
+    project: task.project || "", // Ensure project is a string
   }));
 };
 
@@ -124,4 +127,21 @@ export const deleteTask = async (taskIds: number | number[]) => {
     .delete(tasks)
     .where(and(eq(tasks.userId, user.id), inArray(tasks.id, ids)));
   revalidatePath("/");
+};
+
+export const getProjects = async () => {
+  const user = await getCurrentUser();
+  if (!user) {
+    throw new Error("User not authenticated");
+  }
+
+  const data = await db
+    .select({ project: tasks.project })
+    .from(tasks)
+    .where(eq(tasks.userId, user.id))
+    .groupBy(tasks.project);
+
+  return data
+    .map((value: { project: string | null }) => value.project)
+    .filter(Boolean); // Adjust the type in the map function
 };

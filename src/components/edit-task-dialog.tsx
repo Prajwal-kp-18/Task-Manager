@@ -30,9 +30,11 @@ import { Switch } from "./ui/switch";
 import { Plus } from "lucide-react";
 import { Textarea } from "./ui/textarea";
 import { addTask, editTask } from "../actions/taskAction";
-import { useState, useTransition } from "react";
+import { useState, useTransition, useEffect } from "react";
 import { ReloadIcon } from "@radix-ui/react-icons";
 import { Task } from "@/db/schema";
+import { getProjects } from "../actions/taskAction";
+
 const formSchema = z.object({
   title: z.string().min(1).max(255),
   description: z.string().max(9999).optional(),
@@ -43,6 +45,7 @@ const formSchema = z.object({
     .refine((value) => !value || !isNaN(Date.parse(value)), {
       message: "Invalid date format",
     }),
+  project: z.string().optional(),
 });
 
 interface EditTasksDialogProps
@@ -52,6 +55,9 @@ interface EditTasksDialogProps
 
 export function EditTaskDialog({ task, ...props }: EditTasksDialogProps) {
   const [isUpdatePending, startUpdateTransition] = useTransition();
+  const [projects, setProjects] = useState<string[]>([]);
+  const [newProject, setNewProject] = useState<string>(task.project ?? "");
+  const [showProjectList, setShowProjectList] = useState<boolean>(false);
 
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
@@ -62,8 +68,25 @@ export function EditTaskDialog({ task, ...props }: EditTasksDialogProps) {
       dueDate: task.dueDate
         ? task.dueDate.toISOString().split("T")[0]
         : undefined,
+      project: task.project ?? "",
     },
   });
+
+  useEffect(() => {
+    const fetchProjects = async () => {
+      try {
+        const projectsData = await getProjects();
+        setProjects(
+          projectsData.filter(
+            (project: string | null): project is string => project !== null,
+          ),
+        );
+      } catch (error) {
+        console.error("Failed to fetch projects:", error);
+      }
+    };
+    fetchProjects();
+  }, []);
 
   async function onSubmit(values: z.infer<typeof formSchema>) {
     startUpdateTransition(async () => {
@@ -74,6 +97,7 @@ export function EditTaskDialog({ task, ...props }: EditTasksDialogProps) {
           description: values.description,
           completed: values.completed,
           dueDate: values.dueDate ? new Date(values.dueDate) : null,
+          project: values.project,
         });
         // close the dialog when task added
         // setOpen(false);
@@ -171,6 +195,63 @@ export function EditTaskDialog({ task, ...props }: EditTasksDialogProps) {
                 </FormItem>
               )}
             />
+
+            <FormField
+              control={form.control}
+              name="project"
+              render={({ field }) => (
+                <FormItem>
+                  <FormLabel>Project</FormLabel>
+                  <FormControl>
+                    <input
+                      type="text"
+                      value={newProject}
+                      onFocus={() => setShowProjectList(true)}
+                      onChange={(e) => {
+                        setNewProject(e.target.value);
+                        form.setValue("project", e.target.value);
+                      }}
+                      placeholder="Current Project"
+                      className="mt-2 w-full rounded border bg-gray-800 p-2 text-white focus:outline-none focus:ring-2 focus:ring-blue-500"
+                    />
+                  </FormControl>
+                  {showProjectList && projects.length > 0 && (
+                    <ul className="mt-2 max-h-40 overflow-y-auto rounded border bg-gray-900 shadow-lg">
+                      {projects
+                        .filter((project) =>
+                          project
+                            .toLowerCase()
+                            .includes(newProject.toLowerCase()),
+                        )
+                        .map((project) => (
+                          <li
+                            key={project}
+                            className="cursor-pointer p-2 text-white transition-colors duration-200 hover:bg-blue-700"
+                            onMouseDown={() => {
+                              setNewProject(project);
+                              form.setValue("project", project);
+                              setShowProjectList(false);
+                            }}
+                          >
+                            <span className="font-medium">{project}</span>
+                          </li>
+                        ))}
+                      {projects.filter((project) =>
+                        project
+                          .toLowerCase()
+                          .includes(newProject.toLowerCase()),
+                      ).length > 3 && (
+                        <li className="p-2 text-center text-gray-400">
+                          Scroll for more...
+                        </li>
+                      )}
+                    </ul>
+                  )}
+                  <FormMessage />
+                </FormItem>
+              )}
+            />
+
             <DialogFooter>
               <DialogClose asChild>
                 <Button type="button" variant="secondary">

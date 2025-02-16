@@ -88,6 +88,15 @@ export const tasks = sqliteTable("task", {
   updatedAt: integer("updated_at", { mode: "timestamp" })
     .notNull()
     .default(sql`CURRENT_TIMESTAMP`),
+  project: text("project"),
+});
+
+export const projects = sqliteTable("project", {
+  id: integer("id", { mode: "number" }).primaryKey({ autoIncrement: true }),
+  userId: integer("user_id", { mode: "number" })
+    .references(() => users.id, { onDelete: "cascade" })
+    .notNull(),
+  name: text("name").notNull(),
 });
 
 export type User = typeof users.$inferSelect;
