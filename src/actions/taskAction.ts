@@ -145,3 +145,19 @@ export const getProjects = async () => {
     .map((value: { project: string | null }) => value.project)
     .filter(Boolean); // Adjust the type in the map function
 };
+
+// Function to get tasks by project name for the authenticated user
+export const getTasksByProject = async (projectName: string) => {
+  const user = await getCurrentUser();
+  if (!user) {
+    throw new Error("User not authenticated");
+  }
+
+  const data = await db
+    .select()
+    .from(tasks)
+    .where(and(eq(tasks.userId, user.id), eq(tasks.project, projectName)))
+    .orderBy(asc(tasks.id));
+
+  return data;
+};

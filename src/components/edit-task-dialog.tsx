@@ -27,9 +27,8 @@ import {
 import { toast } from "sonner";
 
 import { Switch } from "./ui/switch";
-import { Plus } from "lucide-react";
 import { Textarea } from "./ui/textarea";
-import { addTask, editTask } from "../actions/taskAction";
+import { editTask } from "../actions/taskAction";
 import { useState, useTransition, useEffect } from "react";
 import { ReloadIcon } from "@radix-ui/react-icons";
 import { Task } from "@/db/schema";
