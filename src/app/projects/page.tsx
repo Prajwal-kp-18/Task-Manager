@@ -44,15 +44,17 @@ export default function DashboardPage() {
   }, []);
 
   const handleProjectClick = async (projectName: string) => {
+    setLoading(true);
     setSelectedProject(projectName);
     const tasksData = await getTasksByProject(projectName);
     setTasks(tasksData);
+    setLoading(false);
   };
 
   return (
     <div className="mt-[80px] flex flex-col p-4 text-white md:mt-[100px]">
-      {loading && <div className="loader">Loading...</div>}
       <h1 className="mb-4 text-3xl font-bold">Projects</h1>
+      {loading && <div className="loader">Loading...</div>}
       <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-3">
         {projects.map((project) => (
           <div
@@ -65,7 +67,7 @@ export default function DashboardPage() {
         ))}
       </div>
 
-      {selectedProject && (
+      {selectedProject && !loading && (
         <div className="mt-6">
           <h2 className="mb-2 text-2xl font-bold">
             Tasks for {selectedProject}
@@ -98,6 +100,11 @@ export default function DashboardPage() {
               </li>
             ))}
           </ul>
+        </div>
+      )}
+      {loading && (
+        <div className="mt-[100px] flex justify-center">
+          <div className="loader">Loading...</div>
         </div>
       )}
     </div>
