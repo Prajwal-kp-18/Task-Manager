@@ -12,19 +12,23 @@ export default function DashboardPage() {
   const [selectedProject, setSelectedProject] = useState<string | null>(null);
   const [tasks, setTasks] = useState<any[]>([]);
   const [todayTasks, setTodayTasks] = useState<any[]>([]);
+  const [loading, setLoading] = useState<boolean>(false);
 
   useEffect(() => {
     const fetchProjects = async () => {
+      setLoading(true);
       const projectsData = await getProjects();
       setProjects(
         projectsData.filter((project): project is string => project !== null),
       );
+      setLoading(false);
     };
     fetchProjects();
   }, []);
 
   useEffect(() => {
     const fetchTasks = async () => {
+      setLoading(true);
       const allTasks = await getTaskData();
       const today = new Date().toISOString().split("T")[0]; // Get current date in YYYY-MM-DD format
       const filteredTasks = allTasks.filter((task) => {
@@ -34,6 +38,7 @@ export default function DashboardPage() {
         return taskDate === today;
       });
       setTodayTasks(filteredTasks);
+      setLoading(false);
     };
     fetchTasks();
   }, []);
@@ -46,6 +51,7 @@ export default function DashboardPage() {
 
   return (
     <div className="mt-[80px] flex flex-col p-4 text-white md:mt-[100px]">
+      {loading && <div className="loader">Loading...</div>}
       <h1 className="mb-4 text-3xl font-bold">Projects</h1>
       <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-3">
         {projects.map((project) => (
