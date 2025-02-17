@@ -21,11 +21,10 @@ Task Manager is a powerful and intuitive application designed to help users effi
 
 ## 🛠️ Technologies Used
 
-- **Frontend**: React.js, Tailwind CSS
-- **Backend**: Node.js, Express.js
-- **Database**: PostgreSQL / MongoDB
+- **Tech Stack**: Next.js,TypeScript,Tailwind CSS
+- **Database**: PostgreSQL( Drizzle ORM)
 - **Authentication**: JWT / OAuth
-- **Deployment**: Docker, Kubernetes (Optional)
+- **Deployment**: Vercel
 
 ## 📌 Usage
 
