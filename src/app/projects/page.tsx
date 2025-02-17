@@ -59,7 +59,7 @@ export default function DashboardPage() {
         ))}
       </div>
 
-      {selectedProject ? (
+      {selectedProject && (
         <div className="mt-6">
           <h2 className="mb-2 text-2xl font-bold">
             Tasks for {selectedProject}
@@ -93,8 +93,6 @@ export default function DashboardPage() {
             ))}
           </ul>
         </div>
-      ) : (
-        <p className="mt-10">No Projects Present</p>
       )}
     </div>
   );
