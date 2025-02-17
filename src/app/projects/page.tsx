@@ -59,7 +59,7 @@ export default function DashboardPage() {
         ))}
       </div>
 
-      {selectedProject && (
+      {selectedProject ? (
         <div className="mt-6">
           <h2 className="mb-2 text-2xl font-bold">
             Tasks for {selectedProject}
@@ -71,12 +71,16 @@ export default function DashboardPage() {
                 className={`flex items-center justify-between rounded-lg border p-4 shadow-sm ${task.completed ? "bg-green-800" : "bg-red-800"} border-gray-700`}
               >
                 <div>
-                  <h3 className="font-medium">
-                    <span className="text-xl">Title: </span>
+                  <h3 className="font-medium text-white">
+                    <span className="text-xl font-bold text-black">
+                      Title:{" "}
+                    </span>
                     {task.title}
                   </h3>
                   <p>
-                    <span className="text-lg">Descriptioon: </span>
+                    <span className="text-whi text-lg font-bold text-black">
+                      Description:{" "}
+                    </span>
                     {task.description}
                   </p>
                 </div>
@@ -89,6 +93,8 @@ export default function DashboardPage() {
             ))}
           </ul>
         </div>
+      ) : (
+        <p className="mt-10">No Projects Present</p>
       )}
     </div>
   );

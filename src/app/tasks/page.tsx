@@ -28,7 +28,7 @@ export default async function DashboardPage() {
           tasksForToday.map((task) => (
             <div
               key={task.id}
-              className={`task-item mb-2 flex items-center justify-between rounded p-4 ${task.completed ? "bg-green-400" : "bg-red-400"}`}
+              className={`task-item mb-2 flex items-center justify-between rounded p-4 ${task.completed ? "bg-green-800" : "bg-red-800"}`}
             >
               <div>
                 <h2 className="text-xl font-semibold text-black">
@@ -41,7 +41,7 @@ export default async function DashboardPage() {
                 </p>
               </div>
               <span
-                className={`inline-flex h-8 w-8 items-center justify-center rounded-full ${task.completed ? "bg-green-800" : "bg-red-800"} text-white`}
+                className={`inline-flex h-8 w-8 items-center justify-center rounded-full ${task.completed ? "bg-green-500" : "bg-red-500"} text-white`}
               >
                 {task.completed ? "✓" : "✗"}
               </span>

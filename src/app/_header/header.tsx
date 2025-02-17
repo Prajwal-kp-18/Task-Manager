@@ -18,10 +18,11 @@ import {
   LogOut,
   Calendar,
   Menu,
+  ClipboardList,
+  Presentation,
 } from "lucide-react";
 import { getUserProfileUseCase } from "@/use-cases/users";
 import { ModeToggle } from "./mode-toggle";
-import { MenuButton } from "./menu-button";
 import { UserId } from "@/types";
 import {
   Sheet,
@@ -59,14 +60,14 @@ export async function Header() {
                 href="/tasks"
                 className="flex items-center gap-2 rounded-lg px-3 py-2 transition-colors hover:bg-accent hover:text-accent-foreground"
               >
-                <Calendar className="h-5 w-5" />
+                <ClipboardList className="h-5 w-5" />
                 <span>My Tasks</span>
               </Link>
               <Link
                 href="/projects"
                 className="flex items-center gap-2 rounded-lg px-3 py-2 transition-colors hover:bg-accent hover:text-accent-foreground"
               >
-                <Calendar className="h-5 w-5" />
+                <Presentation className="h-5 w-5" />
                 <span>Projects</span>
               </Link>
               <Link
@@ -78,13 +79,16 @@ export async function Header() {
               </Link>
             </nav>
           ) : (
-            <Image
-              src="/images/tenor.gif"
-              alt="Loading"
-              width={200}
-              height={200}
-              className="mt-10"
-            />
+            <>
+              <Image
+                src="/images/side.jpg"
+                alt="Loading"
+                width={200}
+                height={400}
+                className="mt-[100px]"
+              />
+              <h1 className="mt-10 text-start text-xl">Sign In To Continue</h1>
+            </>
           )}
         </div>
       </aside>
@@ -127,7 +131,7 @@ export async function Header() {
                         href="/tasks"
                         className="flex items-center rounded-lg px-3 py-2 text-sm font-medium transition-colors hover:bg-accent hover:text-accent-foreground"
                       >
-                        <Calendar className="mr-2 h-5 w-5" />
+                        <ClipboardList className="mr-2 h-5 w-5" />
                         My Tasks
                       </Link>
                     </SheetClose>
@@ -136,7 +140,7 @@ export async function Header() {
                         href="/projects"
                         className="flex items-center rounded-lg px-3 py-2 text-sm font-medium transition-colors hover:bg-accent hover:text-accent-foreground"
                       >
-                        <Calendar className="mr-2 h-5 w-5" />
+                        <Presentation className="mr-2 h-5 w-5" />
                         Projects
                       </Link>
                     </SheetClose>
@@ -151,15 +155,18 @@ export async function Header() {
                     </SheetClose>
                   </nav>
                 ) : (
-                  <div className="mt-10 flex justify-center">
+                  <>
                     <Image
-                      src="/images/tenor.gif"
+                      src="/images/side.jpg"
                       alt="Loading"
-                      width={150}
-                      height={150}
-                      className="mx-auto"
+                      width={200}
+                      height={400}
+                      className="ml-5 mt-[100px]"
                     />
-                  </div>
+                    <h1 className="ml-5 mt-10 text-start text-xl">
+                      Sign In To Continue
+                    </h1>
+                  </>
                 )}
               </SheetContent>
             </Sheet>

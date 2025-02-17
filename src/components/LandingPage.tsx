@@ -33,20 +33,13 @@ export function LandingPage() {
                 // onClick={() => (window.location.href = "/signup")}
                 className="flex items-center rounded-lg bg-blue-700 px-8 py-3 text-white transition hover:bg-green-900"
               >
-                Start Free Trial
+                Start Now
                 <ArrowRight className="ml-2 h-5 w-5" />
               </Link>
-              <button className="rounded-lg border border-gray-300 px-8 py-3 text-gray-700 transition hover:border-gray-400">
+              <button className="hover:text-grey-400 rounded-lg border border-gray-300 px-8 py-3 text-gray-700 transition hover:border-gray-400 dark:text-white">
                 Watch Demo
               </button>
             </div>
-            {/* <div className="mt-12"> */}
-            {/* <img
-                src="https://images.unsplash.com/photo-1551434678-e076c223a692?auto=format&fit=crop&q=80&w=2070"
-                alt="Task Manager Dashboard"
-                className="rounded-xl shadow-2xl"
-              />
-            </div> */}
             <Image
               src="/images/image2.png"
               alt="Task Manager"
@@ -80,17 +73,17 @@ export function LandingPage() {
               </h3>
               <p className="text-gray-600">
                 Organize tasks with custom categories, priorities, and due
-                dates. Let AI help you prioritize.
+                dates. Prioritize effectively to enhance your workflow.
               </p>
             </div>
             <div className="rounded-xl border p-6 shadow-sm transition hover:shadow-md">
               <div className="mb-4 flex h-12 w-12 items-center justify-center rounded-lg">
                 <Clock className="h-6 w-6 text-indigo-600" />
               </div>
-              <h3 className="mb-2 text-xl font-semibold">Time Tracking</h3>
+              <h3 className="mb-2 text-xl font-semibold">Task Scheduling</h3>
               <p className="text-gray-600">
-                Track time spent on tasks and get insights into your
-                productivity patterns.
+                Schedule tasks effectively to manage your time and meet
+                deadlines.
               </p>
             </div>
             <div className="rounded-xl border p-6 shadow-sm transition hover:shadow-md">
@@ -99,8 +92,8 @@ export function LandingPage() {
               </div>
               <h3 className="mb-2 text-xl font-semibold">Team Collaboration</h3>
               <p className="text-gray-600">
-                Work together seamlessly with your team. Share tasks, delegate,
-                and track progress.
+                Collaborate effortlessly with your team. Share tasks, delegate,
+                and monitor progress.
               </p>
             </div>
           </div>
@@ -129,10 +122,10 @@ export function LandingPage() {
                   <Zap className="mt-1 h-6 w-6 flex-shrink-0 text-green-500" />
                   <div>
                     <h3 className="text-lg font-semibold">
-                      AI-Powered Insights
+                      Enhanced Productivity
                     </h3>
                     <p className="text-gray-600">
-                      Let our AI help you make better decisions.
+                      Boost your efficiency with streamlined task management.
                     </p>
                   </div>
                 </div>
